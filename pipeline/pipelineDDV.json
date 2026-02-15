@@ -167,6 +167,22 @@
 					"referenceName": "AzureDatabricksNorthwind",
 					"type": "LinkedServiceReference"
 				}
+			},
+			{
+				"name": "WaitDDV",
+				"type": "Wait",
+				"dependsOn": [
+					{
+						"activity": "NotebookVentasFact",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"waitTimeInSeconds": 300
+				}
 			}
 		],
 		"annotations": []
