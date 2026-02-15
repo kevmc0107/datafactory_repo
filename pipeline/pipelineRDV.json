@@ -40,14 +40,6 @@
 					"notebookPath": {
 						"value": "/Users/kevinmc2201@outlook.com/migracionNorthwindFinal/cargarRDV/Carga_rdv_customers",
 						"type": "Expression"
-					},
-					"baseParameters": {
-						"archivo": "customers",
-						"catalogo": "azuredatabricks199908",
-						"cuentaalmacena": "cuentaalmacenamiento1999",
-						"entorno": "desa",
-						"esquema": "rdv_northwind",
-						"tabla": "customers"
 					}
 				},
 				"linkedServiceName": {
@@ -183,6 +175,26 @@
 		],
 		"parameters": {
 			"archivo": {
+				"type": "String",
+				"defaultValue": "customers"
+			},
+			"catalogo": {
+				"type": "String",
+				"defaultValue": "azuredatabricks199908"
+			},
+			"cuentaalmacena": {
+				"type": "String",
+				"defaultValue": "cuentaalmacenamiento1999"
+			},
+			"entorno": {
+				"type": "String",
+				"defaultValue": "desa"
+			},
+			"esquema": {
+				"type": "String",
+				"defaultValue": "rdv_northwind"
+			},
+			"tabla": {
 				"type": "String",
 				"defaultValue": "customers"
 			}
