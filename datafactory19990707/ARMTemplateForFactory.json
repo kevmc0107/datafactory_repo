@@ -58,6 +58,8 @@
 					{
 						"name": "NotebookCliente",
 						"type": "DatabricksNotebook",
+						"state": "Inactive",
+						"onInactiveMarkAs": "Succeeded",
 						"dependsOn": [],
 						"policy": {
 							"timeout": "0.12:00:00",
@@ -71,13 +73,6 @@
 							"notebookPath": {
 								"value": "/Users/kevinmc2201@outlook.com/migracionNorthwindFinal/cargarRDV/Carga_rdv_customers",
 								"type": "Expression"
-							},
-							"baseParameters": {
-								"customers": "customers",
-								"azuredatabricks199908": "azuredatabricks199908",
-								"cuentaalmacenamiento1999": "cuentaalmacenamiento1999",
-								"desa": "desa",
-								"rdv_northwind": "rdv_northwind"
 							}
 						},
 						"linkedServiceName": {
@@ -113,8 +108,6 @@
 					{
 						"name": "NotebookProducto",
 						"type": "DatabricksNotebook",
-						"state": "Inactive",
-						"onInactiveMarkAs": "Succeeded",
 						"dependsOn": [],
 						"policy": {
 							"timeout": "0.12:00:00",
@@ -209,36 +202,64 @@
 							"referenceName": "AzureDatabricksNorthwind",
 							"type": "LinkedServiceReference"
 						}
+					},
+					{
+						"name": "WaitRDV",
+						"type": "Wait",
+						"state": "Inactive",
+						"onInactiveMarkAs": "Succeeded",
+						"dependsOn": [
+							{
+								"activity": "NotebookCategoria",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							},
+							{
+								"activity": "NotebookCliente",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							},
+							{
+								"activity": "NotebookProveedor",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							},
+							{
+								"activity": "NotebookProducto",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							},
+							{
+								"activity": "NotebookEmpleado",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							},
+							{
+								"activity": "NotebookDetallesOrden",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							},
+							{
+								"activity": "NotebookOrden",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"waitTimeInSeconds": 300
+						}
 					}
 				],
 				"policy": {
 					"elapsedTimeMetric": {}
-				},
-				"parameters": {
-					"archivo": {
-						"type": "String",
-						"defaultValue": "customers"
-					},
-					"catalogo": {
-						"type": "String",
-						"defaultValue": "azuredatabricks199908"
-					},
-					"cuentaalmacena": {
-						"type": "String",
-						"defaultValue": "cuentaalmacenamiento1999"
-					},
-					"entorno": {
-						"type": "String",
-						"defaultValue": "desa"
-					},
-					"esquema": {
-						"type": "String",
-						"defaultValue": "rdv_northwind"
-					},
-					"tabla": {
-						"type": "String",
-						"defaultValue": "customers"
-					}
 				},
 				"annotations": []
 			},
