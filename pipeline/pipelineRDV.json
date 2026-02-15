@@ -1,0 +1,166 @@
+{
+	"name": "pipelineRDV",
+	"properties": {
+		"activities": [
+			{
+				"name": "NotebookCategoria",
+				"type": "DatabricksNotebook",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Users/kevinmc2201@outlook.com/migracionNorthwindFinal/cargarRDV/Carga_rdv_categories"
+				},
+				"linkedServiceName": {
+					"referenceName": "AzureDatabricksNorthwind",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "NotebookCliente",
+				"type": "DatabricksNotebook",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": {
+						"value": "/Users/kevinmc2201@outlook.com/migracionNorthwindFinal/cargarRDV/Carga_rdv_customers",
+						"type": "Expression"
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "AzureDatabricksNorthwind",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "NotebookProveedor",
+				"type": "DatabricksNotebook",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": {
+						"value": "/Users/kevinmc2201@outlook.com/migracionNorthwindFinal/cargarRDV/carga_rdv_suppliers",
+						"type": "Expression"
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "AzureDatabricksNorthwind",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "NotebookProducto",
+				"type": "DatabricksNotebook",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": {
+						"value": "/Users/kevinmc2201@outlook.com/migracionNorthwindFinal/cargarRDV/carga_rdv_products",
+						"type": "Expression"
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "AzureDatabricksNorthwind",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "NotebookEmpleado",
+				"type": "DatabricksNotebook",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": {
+						"value": "/Users/kevinmc2201@outlook.com/migracionNorthwindFinal/cargarRDV/carga_rdv_employees",
+						"type": "Expression"
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "AzureDatabricksNorthwind",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "NotebookDetallesOrden",
+				"type": "DatabricksNotebook",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": {
+						"value": "/Users/kevinmc2201@outlook.com/migracionNorthwindFinal/cargarRDV/carga_rdv_orderdetails",
+						"type": "Expression"
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "AzureDatabricksNorthwind",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "NotebookOrden",
+				"type": "DatabricksNotebook",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": {
+						"value": "/Users/kevinmc2201@outlook.com/migracionNorthwindFinal/cargarRDV/carga_rdv_orders",
+						"type": "Expression"
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "AzureDatabricksNorthwind",
+					"type": "LinkedServiceReference"
+				}
+			}
+		],
+		"annotations": []
+	}
+}
