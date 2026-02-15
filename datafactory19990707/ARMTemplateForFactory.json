@@ -28,6 +28,188 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/pipelineDDV')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "NotebookClienteDim",
+						"type": "DatabricksNotebook",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": "/Users/kevinmc2201@outlook.com/migracionNorthwindFinal/cargaDDV/carga_ddv_cliente_dim"
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureDatabricksNorthwind",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "NotebookProveedorDim",
+						"type": "DatabricksNotebook",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": {
+								"value": "/Users/kevinmc2201@outlook.com/migracionNorthwindFinal/cargaDDV/carga_ddv_proveedor_dim",
+								"type": "Expression"
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureDatabricksNorthwind",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "NotebookVentasFact",
+						"type": "DatabricksNotebook",
+						"dependsOn": [
+							{
+								"activity": "NotebookClienteDim",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							},
+							{
+								"activity": "NotebookProveedorDim",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							},
+							{
+								"activity": "NotebookTiempoDim",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							},
+							{
+								"activity": "NotebookProductsDim",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							},
+							{
+								"activity": "NotebookEmpleadosDim",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": {
+								"value": "/Users/kevinmc2201@outlook.com/migracionNorthwindFinal/cargaDDV/carga_ddv_ventas_fact",
+								"type": "Expression"
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureDatabricksNorthwind",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "NotebookTiempoDim",
+						"type": "DatabricksNotebook",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": {
+								"value": "/Users/kevinmc2201@outlook.com/migracionNorthwindFinal/cargaDDV/carga_ddv_tiempo_dim",
+								"type": "Expression"
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureDatabricksNorthwind",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "NotebookProductsDim",
+						"type": "DatabricksNotebook",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": {
+								"value": "/Users/kevinmc2201@outlook.com/migracionNorthwindFinal/cargaDDV/carga_ddv_producto_dim",
+								"type": "Expression"
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureDatabricksNorthwind",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "NotebookEmpleadosDim",
+						"type": "DatabricksNotebook",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": {
+								"value": "/Users/kevinmc2201@outlook.com/migracionNorthwindFinal/cargaDDV/carga_ddv_empleado_dim",
+								"type": "Expression"
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureDatabricksNorthwind",
+							"type": "LinkedServiceReference"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureDatabricksNorthwind')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/pipelineRDV')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -468,6 +650,52 @@
 						"linkedServiceName": {
 							"referenceName": "AzureDatabricksNorthwind",
 							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "WaitUDV",
+						"type": "Wait",
+						"dependsOn": [
+							{
+								"activity": "NotebookCliente",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							},
+							{
+								"activity": "NotebookProveedor",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							},
+							{
+								"activity": "NotebookOrder",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							},
+							{
+								"activity": "NotebookEmpleado",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							},
+							{
+								"activity": "NotebookOrderDetails",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							},
+							{
+								"activity": "NotebookProductos",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"waitTimeInSeconds": 300
 						}
 					}
 				],
