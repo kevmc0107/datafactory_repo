@@ -1,0 +1,123 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Nombre de instancia de Data Factory"
+		},
+		"AzureDatabricksNorthwind": {
+			"type": "string"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/pipelineRDV')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "NotebookCategoria",
+						"type": "DatabricksNotebook",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": "/Users/espinozaguillermo2160@outlook.com/migracionNorthwind/cargarRDV/Carga_rdv_categories"
+						},
+						"linkedServiceName": {
+							"referenceName": "[parameters('AzureDatabricksNorthwind')]",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "NotebookCliente",
+						"type": "DatabricksNotebook",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": {
+								"value": "/Users/espinozaguillermo2160@outlook.com/migracionNorthwind/cargarRDV/Carga_rdv_customers",
+								"type": "Expression"
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "[parameters('AzureDatabricksNorthwind')]",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "NotebookProveedor",
+						"type": "DatabricksNotebook",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": {
+								"value": "/Users/espinozaguillermo2160@outlook.com/migracionNorthwind/cargarRDV/Carga_rdv_suppliers",
+								"type": "Expression"
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "[parameters('AzureDatabricksNorthwind')]",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "WaitRDV",
+						"type": "Wait",
+						"dependsOn": [
+							{
+								"activity": "NotebookCategoria",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							},
+							{
+								"activity": "NotebookCliente",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							},
+							{
+								"activity": "NotebookProveedor",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"waitTimeInSeconds": 300
+						}
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": []
+		}
+	]
+}
