@@ -40,6 +40,13 @@
 					"notebookPath": {
 						"value": "/Users/kevinmc2201@outlook.com/migracionNorthwindFinal/cargarRDV/Carga_rdv_customers",
 						"type": "Expression"
+					},
+					"baseParameters": {
+						"customers": "customers",
+						"azuredatabricks199908": "azuredatabricks199908",
+						"cuentaalmacenamiento1999": "cuentaalmacenamiento1999",
+						"desa": "desa",
+						"rdv_northwind": "rdv_northwind"
 					}
 				},
 				"linkedServiceName": {
