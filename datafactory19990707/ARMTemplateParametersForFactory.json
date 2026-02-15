@@ -1,0 +1,15 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "datafactory19990707"
+		},
+		"AzureDatabricksNorthwind_accessToken": {
+			"value": ""
+		},
+		"AzureDatabricksNorthwind_properties_typeProperties_existingClusterId": {
+			"value": "0214-182834-init4tr6"
+		}
+	}
+}
