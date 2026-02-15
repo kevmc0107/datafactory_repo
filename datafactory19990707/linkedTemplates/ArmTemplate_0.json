@@ -28,6 +28,98 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/pipelineUDV')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "NotebookPaisCliente",
+						"type": "DatabricksNotebook",
+						"state": "Inactive",
+						"onInactiveMarkAs": "Succeeded",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {}
+					},
+					{
+						"name": "NotebookCliente",
+						"type": "DatabricksNotebook",
+						"state": "Inactive",
+						"onInactiveMarkAs": "Succeeded",
+						"dependsOn": [
+							{
+								"activity": "NotebookPaisCliente",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {}
+					},
+					{
+						"name": "NotebookPaisProveedor",
+						"type": "DatabricksNotebook",
+						"state": "Inactive",
+						"onInactiveMarkAs": "Succeeded",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {}
+					},
+					{
+						"name": "NotebookProveedor",
+						"type": "DatabricksNotebook",
+						"state": "Inactive",
+						"onInactiveMarkAs": "Succeeded",
+						"dependsOn": [
+							{
+								"activity": "NotebookPaisProveedor",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/AzureDatabricksNorthwind')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
@@ -54,6 +146,8 @@
 					{
 						"name": "NotebookCategoria",
 						"type": "DatabricksNotebook",
+						"state": "Inactive",
+						"onInactiveMarkAs": "Succeeded",
 						"dependsOn": [],
 						"policy": {
 							"timeout": "0.12:00:00",
@@ -87,6 +181,13 @@
 							"notebookPath": {
 								"value": "/Users/kevinmc2201@outlook.com/migracionNorthwindFinal/cargarRDV/Carga_rdv_customers",
 								"type": "Expression"
+							},
+							"baseParameters": {
+								"customers": "customers",
+								"azuredatabricks199908": "azuredatabricks199908",
+								"cuentaalmacenamiento1999": "cuentaalmacenamiento1999",
+								"desa": "desa",
+								"rdv_northwind": "rdv_northwind"
 							}
 						},
 						"linkedServiceName": {
@@ -97,6 +198,8 @@
 					{
 						"name": "NotebookProveedor",
 						"type": "DatabricksNotebook",
+						"state": "Inactive",
+						"onInactiveMarkAs": "Succeeded",
 						"dependsOn": [],
 						"policy": {
 							"timeout": "0.12:00:00",
@@ -120,6 +223,8 @@
 					{
 						"name": "NotebookProducto",
 						"type": "DatabricksNotebook",
+						"state": "Inactive",
+						"onInactiveMarkAs": "Succeeded",
 						"dependsOn": [],
 						"policy": {
 							"timeout": "0.12:00:00",
@@ -143,6 +248,8 @@
 					{
 						"name": "NotebookEmpleado",
 						"type": "DatabricksNotebook",
+						"state": "Inactive",
+						"onInactiveMarkAs": "Succeeded",
 						"dependsOn": [],
 						"policy": {
 							"timeout": "0.12:00:00",
@@ -166,6 +273,8 @@
 					{
 						"name": "NotebookDetallesOrden",
 						"type": "DatabricksNotebook",
+						"state": "Inactive",
+						"onInactiveMarkAs": "Succeeded",
 						"dependsOn": [],
 						"policy": {
 							"timeout": "0.12:00:00",
@@ -189,6 +298,8 @@
 					{
 						"name": "NotebookOrden",
 						"type": "DatabricksNotebook",
+						"state": "Inactive",
+						"onInactiveMarkAs": "Succeeded",
 						"dependsOn": [],
 						"policy": {
 							"timeout": "0.12:00:00",
@@ -212,6 +323,32 @@
 				],
 				"policy": {
 					"elapsedTimeMetric": {}
+				},
+				"parameters": {
+					"archivo": {
+						"type": "String",
+						"defaultValue": "customers"
+					},
+					"catalogo": {
+						"type": "String",
+						"defaultValue": "azuredatabricks199908"
+					},
+					"cuentaalmacena": {
+						"type": "String",
+						"defaultValue": "cuentaalmacenamiento1999"
+					},
+					"entorno": {
+						"type": "String",
+						"defaultValue": "desa"
+					},
+					"esquema": {
+						"type": "String",
+						"defaultValue": "rdv_northwind"
+					},
+					"tabla": {
+						"type": "String",
+						"defaultValue": "customers"
+					}
 				},
 				"annotations": []
 			},
