@@ -5,6 +5,8 @@
 			{
 				"name": "NotebookCategoria",
 				"type": "DatabricksNotebook",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -38,6 +40,14 @@
 					"notebookPath": {
 						"value": "/Users/kevinmc2201@outlook.com/migracionNorthwindFinal/cargarRDV/Carga_rdv_customers",
 						"type": "Expression"
+					},
+					"baseParameters": {
+						"archivo": "customers",
+						"catalogo": "azuredatabricks199908",
+						"cuentaalmacena": "cuentaalmacenamiento1999",
+						"entorno": "desa",
+						"esquema": "rdv_northwind",
+						"tabla": "customers"
 					}
 				},
 				"linkedServiceName": {
@@ -48,6 +58,8 @@
 			{
 				"name": "NotebookProveedor",
 				"type": "DatabricksNotebook",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -71,6 +83,8 @@
 			{
 				"name": "NotebookProducto",
 				"type": "DatabricksNotebook",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -94,6 +108,8 @@
 			{
 				"name": "NotebookEmpleado",
 				"type": "DatabricksNotebook",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -117,6 +133,8 @@
 			{
 				"name": "NotebookDetallesOrden",
 				"type": "DatabricksNotebook",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -140,6 +158,8 @@
 			{
 				"name": "NotebookOrden",
 				"type": "DatabricksNotebook",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -161,6 +181,12 @@
 				}
 			}
 		],
+		"parameters": {
+			"archivo": {
+				"type": "String",
+				"defaultValue": "customers"
+			}
+		},
 		"annotations": []
 	}
 }
