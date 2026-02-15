@@ -196,6 +196,52 @@
 					"referenceName": "AzureDatabricksNorthwind",
 					"type": "LinkedServiceReference"
 				}
+			},
+			{
+				"name": "WaitUDV",
+				"type": "Wait",
+				"dependsOn": [
+					{
+						"activity": "NotebookCliente",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "NotebookProveedor",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "NotebookOrder",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "NotebookEmpleado",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "NotebookOrderDetails",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "NotebookProductos",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"waitTimeInSeconds": 300
+				}
 			}
 		],
 		"annotations": []
